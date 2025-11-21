@@ -1,0 +1,24 @@
+---
+name: Build PKGBUILDs
+on:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "05 10 * * *" # 10:05am UTC every day
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/README.md"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build PKGBUILDs
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Build PKGBUILDS
+        uses: heckbat/archlinux-pkgbuilds@v0.0.1
