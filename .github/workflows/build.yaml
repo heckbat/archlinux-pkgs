@@ -14,8 +14,8 @@ on:
   workflow_dispatch:
 
 env:
-  RELEASE_NAME: repo
-  TEMP_RELEASE_NAME: _repo
+  RELEASE_NAME: bootc
+  TEMP_RELEASE_NAME: _bootc
 
 jobs:
   build:
@@ -31,7 +31,9 @@ jobs:
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: heckbat/archlinux-pkgbuilds@cdd2c0a09a715f913c2c5d6446bb5e85f515024d
+        uses: heckbat/archlinux-pkgbuilds@aeca3fb0b28b30c07107eda5d59b122d0404cc07
+        with:
+          repo_name: "${{ env.RELEASE_NAME }}"
 
       - name: Delete possible leftover temporary release
         env:
