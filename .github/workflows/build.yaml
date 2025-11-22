@@ -27,50 +27,50 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build PKGBUILDS
+      - name: Build PKGBUILDs
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: heckbat/archlinux-pkgbuilds@5472476bc8a4857c525b53e46bf6ced892d5df0c
+        uses: hecknt/archlinux-pkgbuilds@9e94e5a6d12a5505bd699816950f29d47dc9a9c1
         with:
-          repo_name: "${{ env.RELEASE_NAME }}"
+          repo_name: "bootc"
 
-      - name: Delete possible leftover temporary release
-        env:
-          GH_REPO: "${{ github.repository }}"
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: gh release delete --yes "${{ env.TEMP_RELEASE_NAME }}" || true
+      # - name: Delete possible leftover temporary release
+      #   env:
+      #     GH_REPO: "${{ github.repository }}"
+      #     GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #   run: gh release delete --yes "${{ env.TEMP_RELEASE_NAME }}" || true
 
-      - name: Publish mainline to a temporary release
-        uses: ncipollo/release-action@v1.20.0
-        with:
-          name: ${{ env.TEMP_RELEASE_NAME }}
-          tag: ${{ env.TEMP_RELEASE_NAME }}
-          commit: ${{ github.sha }}
-          artifacts: ./repo/*
-          artifactErrorsFailBuild: true
-          bodyFile: README.md
+      # - name: Publish mainline to a temporary release
+      #   uses: ncipollo/release-action@v1.20.0
+      #   with:
+      #     name: ${{ env.TEMP_RELEASE_NAME }}
+      #     tag: ${{ env.TEMP_RELEASE_NAME }}
+      #     commit: ${{ github.sha }}
+      #     artifacts: ./repo/*
+      #     artifactErrorsFailBuild: true
+      #     bodyFile: README.md
 
-      - name: Delete the existing mainline release
-        env:
-          GH_REPO: "${{ github.repository }}"
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: gh release delete --yes "${{ env.RELEASE_NAME }}" || true
+      # - name: Delete the existing mainline release
+      #   env:
+      #     GH_REPO: "${{ github.repository }}"
+      #     GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #   run: gh release delete --yes "${{ env.RELEASE_NAME }}" || true
 
-      - name: Rename the temporary release to mainline
-        env:
-          GH_REPO: "${{ github.repository }}"
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: gh release edit --latest --tag "${{ env.RELEASE_NAME }}" --title "${{ env.RELEASE_NAME }}" "${{ env.TEMP_RELEASE_NAME}}"
+      # - name: Rename the temporary release to mainline
+      #   env:
+      #     GH_REPO: "${{ github.repository }}"
+      #     GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #   run: gh release edit --latest --tag "${{ env.RELEASE_NAME }}" --title "${{ env.RELEASE_NAME }}" "${{ env.TEMP_RELEASE_NAME}}"
 
-      - name: Delete the temporary Git tag
-        env:
-          GH_REPO: "${{ github.repository }}"
-          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        run: gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/${{ env.TEMP_RELEASE_NAME }}"
+      # - name: Delete the temporary Git tag
+      #   env:
+      #     GH_REPO: "${{ github.repository }}"
+      #     GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      #   run: gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/${{ env.TEMP_RELEASE_NAME }}"
 
-      - name: Tag the mainline release
-        uses: rickstaa/action-create-tag@v1.7.2
-        with:
-          tag: ${{ env.RELEASE_NAME }}
-          force_push_tag: true
+      # - name: Tag the mainline release
+      #   uses: rickstaa/action-create-tag@v1.7.2
+      #   with:
+      #     tag: ${{ env.RELEASE_NAME }}
+      #     force_push_tag: true
