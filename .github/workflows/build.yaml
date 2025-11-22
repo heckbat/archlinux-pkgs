@@ -31,7 +31,7 @@ jobs:
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: heckbat/archlinux-pkgbuilds@aeca3fb0b28b30c07107eda5d59b122d0404cc07
+        uses: heckbat/archlinux-pkgbuilds@5472476bc8a4857c525b53e46bf6ced892d5df0c
         with:
           repo_name: "${{ env.RELEASE_NAME }}"
 
