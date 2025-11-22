@@ -13,6 +13,10 @@ on:
       - "**/README.md"
   workflow_dispatch:
 
+env:
+  RELEASE_NAME: repo
+  TEMP_RELEASE_NAME: _repo
+
 jobs:
   build:
     name: Build PKGBUILDs
@@ -21,7 +25,50 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Build PKGBUILDS
-        uses: heckbat/archlinux-pkgbuilds@8d0987a8ef89d17e82342962a6798428c1fb38cb
+        env:
+          GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
+          GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
+        uses: heckbat/archlinux-pkgbuilds@bdf8535814591a2e59081e7b7170d3f309282581
+
+      - name: Delete possible leftover temporary release
+        env:
+          GH_REPO: "${{ github.repository }}"
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: gh release delete --yes "${{ env.TEMP_RELEASE_NAME }}" || true
+
+      - name: Publish mainline to a temporary release
+        uses: ncipollo/release-action@v1.20.0
+        with:
+          name: ${{ env.TEMP_RELEASE_NAME }}
+          tag: ${{ env.TEMP_RELEASE_NAME }}
+          commit: ${{ github.sha }}
+          artifacts: ./repo/*
+          artifactErrorsFailBuild: true
+          bodyFile: ci/releases/body-${{ env.RELEASE_NAME }}.md
+
+      - name: Delete the existing mainline release
+        env:
+          GH_REPO: "${{ github.repository }}"
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: gh release delete --yes "${{ env.RELEASE_NAME }}" || true
+
+      - name: Rename the temporary release to mainline
+        env:
+          GH_REPO: "${{ github.repository }}"
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: gh release edit --latest --tag "${{ env.RELEASE_NAME }}" --title "${{ env.RELEASE_NAME }}" "${{ env.TEMP_RELEASE_NAME}}"
+
+      - name: Delete the temporary Git tag
+        env:
+          GH_REPO: "${{ github.repository }}"
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: gh api -X DELETE "repos/${{ github.repository }}/git/refs/tags/${{ env.TEMP_RELEASE_NAME }}"
+
+      - name: Tag the mainline release
+        uses: rickstaa/action-create-tag@v1.7.2
+        with:
+          tag: ${{ env.RELEASE_NAME }}
+          force_push_tag: true
