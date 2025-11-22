@@ -31,9 +31,10 @@ jobs:
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: hecknt/archlinux-pkgbuilds@9e94e5a6d12a5505bd699816950f29d47dc9a9c1
+        uses: hecknt/archlinux-pkgbuilds@72b223ee807b9d28a8f2e6dba7411ef7e2cb9aa2
         with:
           repo_name: "bootc"
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
 
       # - name: Delete possible leftover temporary release
       #   env:
