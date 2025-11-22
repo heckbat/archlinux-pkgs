@@ -24,4 +24,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build PKGBUILDS
-        uses: heckbat/archlinux-pkgbuilds@e5445046ccf48bd8e66eeb49b6ea455815f931ca
+        uses: heckbat/archlinux-pkgbuilds@8d0987a8ef89d17e82342962a6798428c1fb38cb
