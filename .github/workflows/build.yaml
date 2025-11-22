@@ -21,4 +21,4 @@ jobs:
       contents: write
     steps:
       - name: Build PKGBUILDS
-        uses: heckbat/archlinux-pkgbuilds@v0.0.3
+        uses: heckbat/archlinux-pkgbuilds@v0.0.4
