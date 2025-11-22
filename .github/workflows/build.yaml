@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build PKGBUILDs
-        uses: hecknt/archlinux-pkgbuilds@05465e001e130293c579b3d0edd3b503129efbdd
+        uses: hecknt/archlinux-pkgbuilds@ec3671e88912fab51c923fdbc50b61505c70c287
         with:
           repo_name: "bootc"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
