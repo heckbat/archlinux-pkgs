@@ -31,7 +31,7 @@ jobs:
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: hecknt/archlinux-pkgbuilds@6d61b088d358d2071da33181000c1fde21b19592
+        uses: hecknt/archlinux-pkgbuilds@2d902a9aedc56fa865d4e331471c7e28c4866293
         with:
           repo_name: "bootc"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
