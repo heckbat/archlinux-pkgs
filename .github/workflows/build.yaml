@@ -47,7 +47,7 @@ jobs:
           commit: ${{ github.sha }}
           artifacts: ./repo/*
           artifactErrorsFailBuild: true
-          bodyFile: ci/releases/body-${{ env.RELEASE_NAME }}.md
+          bodyFile: README.md
 
       - name: Delete the existing mainline release
         env:
