@@ -31,7 +31,7 @@ jobs:
         env:
           GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
           GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
-        uses: heckbat/archlinux-pkgbuilds@bdf8535814591a2e59081e7b7170d3f309282581
+        uses: heckbat/archlinux-pkgbuilds@cdd2c0a09a715f913c2c5d6446bb5e85f515024d
 
       - name: Delete possible leftover temporary release
         env:
