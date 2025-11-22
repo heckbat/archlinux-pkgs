@@ -25,7 +25,7 @@ jobs:
       contents: write
     steps:
       - name: Build PKGBUILDs
-        uses: hecknt/archlinux-pkgbuilds@v0.1.0
+        uses: hecknt/archlinux-pkgbuilds@95dff02452936db3b0d216e2ec2bc060def336da
         with:
           repo_name: "bootc"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
