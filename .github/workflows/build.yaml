@@ -28,13 +28,12 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build PKGBUILDs
-        env:
-          GPG_KEY_DATA: "${{ secrets.GPG_KEY_DATA }}"
-          GPG_KEY_ID: "${{ vars.GPG_KEY_ID }}"
         uses: hecknt/archlinux-pkgbuilds@05465e001e130293c579b3d0edd3b503129efbdd
         with:
           repo_name: "bootc"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
+          gpg_key_data: "${{ secrets.GPG_KEY_DATA }}"
+          gpg_key_id: "${{ vars.GPG_KEY_ID }}"
 
       # - name: Delete possible leftover temporary release
       #   env:
