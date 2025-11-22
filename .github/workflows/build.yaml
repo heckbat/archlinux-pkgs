@@ -20,5 +20,8 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Build PKGBUILDS
         uses: heckbat/archlinux-pkgbuilds@89fb1c577462bfd132ab0000e3dbf97f5d5addfc
