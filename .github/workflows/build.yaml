@@ -24,11 +24,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
       - name: Build PKGBUILDs
-        uses: hecknt/archlinux-pkgbuilds@e25cb4c3284e68d4ff2984dc448442ed889d12c5
+        uses: hecknt/archlinux-pkgbuilds@v0.1.0
         with:
           repo_name: "bootc"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
